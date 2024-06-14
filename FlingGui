@@ -1,0 +1,70 @@
+-- Membuat GUI dan elemen-elemen yang diperlukan
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Button = Instance.new("TextButton")
+local MinimizeButton = Instance.new("TextButton")
+local CloseButton = Instance.new("TextButton")
+
+-- Menentukan properti GUI dan elemen-elemen
+ScreenGui.Parent = game.CoreGui
+Frame.Parent = ScreenGui
+Frame.Size = UDim2.new(0, 200, 0, 100)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+Frame.Draggable = true -- Membuat frame bisa dipindah
+
+Button.Parent = Frame
+Button.Size = UDim2.new(0, 200, 0, 50)
+Button.Position = UDim2.new(0, 0, 0.5, 0)
+Button.Text = "Fling Player"
+Button.TextScaled = true
+
+MinimizeButton.Parent = Frame
+MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Position = UDim2.new(1, -60, 0, 0)
+MinimizeButton.Text = "-"
+MinimizeButton.TextScaled = true
+
+CloseButton.Parent = Frame
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -30, 0, 0)
+CloseButton.Text = "X"
+CloseButton.TextScaled = true
+
+-- Fungsi fling
+local function flingPlayer()
+    -- Mendapatkan karakter pemain
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+
+    -- Memastikan karakter valid
+    if character then
+        local humanoid = character:FindFirstChild("Humanoid")
+
+        -- Memastikan humanoid valid
+        if humanoid then
+            -- Menerapkan gaya ke humanoid
+            humanoid.PlatformStand = true
+
+            -- Menambahkan gaya ke humanoid
+            game:GetService("Debris"):AddItem(humanoid, 1)
+
+            -- Menerapkan gaya ke humanoid
+            wait(1)
+            humanoid.PlatformStand = false
+        end
+    end
+end
+
+-- Fungsi untuk menangani klik tombol minimize dan close
+local function minimize()
+    Frame.Visible = not Frame.Visible
+end
+
+local function close()
+    Frame:Destroy()
+end
+
+-- Menghubungkan fungsi-fungsi ke event klik tombol
+Button.MouseButton1Click:Connect(flingPlayer)
+MinimizeButton.MouseButton1Click:Connect(minimize)
+CloseButton.MouseButton1Click:Connect(close)
