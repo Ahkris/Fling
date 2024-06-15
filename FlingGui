@@ -32,25 +32,28 @@ CloseButton.TextScaled = true
 
 -- Fungsi fling
 local function flingPlayer()
-    -- Mendapatkan karakter pemain
-    local player = game.Players.LocalPlayer
-    local character = player.Character
+    -- Mendapatkan semua pemain
+    local players = game.Players:GetPlayers()
 
-    -- Memastikan karakter valid
-    if character then
-        local humanoid = character:FindFirstChild("Humanoid")
+    for _, player in ipairs(players) do
+        local character = player.Character
 
-        -- Memastikan humanoid valid
-        if humanoid then
-            -- Menerapkan gaya ke humanoid
-            humanoid.PlatformStand = true
+        -- Memastikan karakter valid
+        if character then
+            local humanoid = character:FindFirstChild("Humanoid")
 
-            -- Menambahkan gaya ke humanoid
-            game:GetService("Debris"):AddItem(humanoid, 1)
+            -- Memastikan humanoid valid
+            if humanoid then
+                -- Menerapkan gaya ke humanoid
+                humanoid.PlatformStand = true
 
-            -- Menerapkan gaya ke humanoid
-            wait(1)
-            humanoid.PlatformStand = false
+                -- Menambahkan gaya ke humanoid
+                game:GetService("Debris"):AddItem(humanoid, 1)
+
+                -- Menerapkan gaya ke humanoid
+                wait(1)
+                humanoid.PlatformStand = false
+            end
         end
     end
 end
@@ -61,7 +64,7 @@ local function minimize()
 end
 
 local function close()
-    Frame:Destroy()
+    ScreenGui:Destroy()
 end
 
 -- Menghubungkan fungsi-fungsi ke event klik tombol
